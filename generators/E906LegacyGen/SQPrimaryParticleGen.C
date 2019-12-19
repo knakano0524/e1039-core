@@ -181,7 +181,6 @@ int SQPrimaryParticleGen::InitRun(PHCompositeNode* topNode)
 int SQPrimaryParticleGen::process_event(PHCompositeNode* topNode)
 {
 
-  _vertexGen->InitRun(topNode);
   TGeoManager* geoManager = PHGeomUtility::GetTGeoManager(topNode);
   double x_vtx,y_vtx,z_vtx;
   x_vtx=0.;
@@ -536,4 +535,24 @@ bool SQPrimaryParticleGen::generateDimuon(double mass, double xF, SQMCDimuon& di
     if(dimuon.fCosTh < cosThetaMin || dimuon.fCosTh >cosThetaMax) return false;
 
     return true;
+}
+
+void SQPrimaryParticleGen::setVertexXCenter(const double val)
+{
+  _vertexGen->setXCenter(val);
+}
+
+void SQPrimaryParticleGen::setVertexXWidth (const double val)
+{
+  _vertexGen->setXWidth(val);
+}
+
+void SQPrimaryParticleGen::setVertexYCenter(const double val)
+{
+  _vertexGen->setYCenter(val);
+}
+
+void SQPrimaryParticleGen::setVertexYWidth (const double val)
+{
+  _vertexGen->setYWidth(val);
 }

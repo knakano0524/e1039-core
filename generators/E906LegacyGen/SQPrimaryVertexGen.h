@@ -16,21 +16,16 @@ from Kun to E1039 experiment in Fun4All framework
 #include <TF2.h>
 #include <TVector3.h>
 #include <TH1F.h>
-#include <fun4all/SubsysReco.h>
 #include "SQBeamlineObject.h"
 
 class PHCompositeNode;
 class SQBeamlineObject;
 
-class SQPrimaryVertexGen: public SubsysReco
+class SQPrimaryVertexGen
 {
 public:
     SQPrimaryVertexGen();
     virtual ~SQPrimaryVertexGen();
-
-
-    //Initialize at the begining of Run
-    int InitRun(PHCompositeNode* topNode);
 
     //Tree traversal
     void traverse(TGeoNode* node, double&xvertex,double&yvertex,double&zvertex);
@@ -56,14 +51,14 @@ public:
    //get the reference to the chosen objects
    //const BeamlineObject& getInteractable() { return interactables[index]; } 
 
-    TF2* get_beam_profile() const {
-      return _beam_profile;
-    }
-
-    void set_beam_profile(TF2* BeamProfile) {
-      _beam_profile = BeamProfile;
-    }
-  
+    double getXCenter() const    { return beamProfile->GetParameter(0); }
+    double getXWidth () const    { return beamProfile->GetParameter(1); }
+    double getYCenter() const    { return beamProfile->GetParameter(2); }
+    double getYWidth () const    { return beamProfile->GetParameter(3); }
+    void   setXCenter(const double val) { beamProfile->SetParameter(0, val); }
+    void   setXWidth (const double val) { beamProfile->SetParameter(1, val); }
+    void   setYCenter(const double val) { beamProfile->SetParameter(2, val); }
+    void   setYWidth (const double val) { beamProfile->SetParameter(3, val); }
 
 private:
     //Array of beamline objects
@@ -80,13 +75,6 @@ private:
 
     //Beam profile
     TF2* beamProfile;
-
-    //flag to test if the generator has been initialized
-    bool inited;
-
-
-    TF2* _beam_profile;
-  
 };
 
 #endif

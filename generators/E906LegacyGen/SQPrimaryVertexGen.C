@@ -16,31 +16,16 @@ from Kun to E1039 experiment in Fun4All framework
 
 #include "SQPrimaryVertexGen.h"
 
- TF2* beam_global;
-
-SQPrimaryVertexGen::SQPrimaryVertexGen():
- _beam_profile(nullptr)
+SQPrimaryVertexGen::SQPrimaryVertexGen()
 {
-inited = false; 
+  beamProfile = new TF2("beamProfile", "exp(-0.5*pow((x-[0])/[1], 2)*exp(-0.5*pow((y-[2])/[3], 2))", -10., 10., -10., 10.);
+  beamProfile->SetParameters(0.0, 0.68, 0.0, 0.76);
 }
 
 SQPrimaryVertexGen::~SQPrimaryVertexGen()
 {
-  if (_beam_profile) delete _beam_profile;
-	
-  return;
+  if (beamProfile) delete beamProfile;
 }
-
-
-int SQPrimaryVertexGen::InitRun(PHCompositeNode* topNode){ 
-
-  if(_beam_profile){
-     beam_global = get_beam_profile();  
-   }
-  return 0;
-
-}
-
 
 void SQPrimaryVertexGen::traverse(TGeoNode* node,  double&xvertex,double&yvertex,double&zvertex) 
 {
@@ -278,18 +263,7 @@ void SQPrimaryVertexGen::traverse(TGeoNode* node,  double&xvertex,double&yvertex
 
 void SQPrimaryVertexGen::generateVtxPerp(double& x, double& y)
 {
-  
-  beamProfile = ::beam_global;
-  if(beamProfile)
-  { 
   beamProfile->GetRandom2(x, y);
-  }
-  else
-  {
-    x=gRandom->Gaus(0.,0.414);
-    y=gRandom->Gaus(0.,0.343);
-  }
-
 }
 
 void SQPrimaryVertexGen::findInteractingPiece()

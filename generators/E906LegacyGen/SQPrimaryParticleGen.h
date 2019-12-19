@@ -83,6 +83,11 @@ public:
       massMin = mmin;
       massMax = mmax;
     }
+
+    void setVertexXCenter(const double val);
+    void setVertexXWidth (const double val);
+    void setVertexYCenter(const double val);
+    void setVertexYWidth (const double val);
     //@
 
  private:
